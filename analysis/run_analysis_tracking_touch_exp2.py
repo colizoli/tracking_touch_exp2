@@ -42,7 +42,7 @@ higher_level    = False # all subjects' dataframe, pupil and behavior higher lev
 home_dir        = os.path.dirname(os.getcwd()) # one level up from analysis folder
 source_dir      = os.path.join(home_dir, 'sourcedata')
 data_dir        = os.path.join(home_dir, 'derivatives')
-experiment_name = 'task-touch_prediction' # 3AFC Decision Task
+experiment_name = 'task-touch_prediction2' # 3AFC Decision Task
 edf             = '{}_recording-eyetracking_physio'.format(experiment_name)
 
 # -----------------------
