@@ -560,121 +560,136 @@ class higherLevel(object):
             print(DFANOVA.columns)
             DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
             DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_correct-frequency_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
+        # '''
+        # ######## BLOCK x CORRECT x FREQUENCY ########
+        # '''
+        # for pupil_dv in ['RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']:
+        #
+        #     # MEANS subject x bin x tone x congruent
+        #     DFOUT = DF.groupby(['subject', 'block', 'correct', 'frequency'])[pupil_dv].mean()
+        #     DFOUT.to_csv(os.path.join(self.averages_folder, '{}_block-correct-frequency_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # FOR PLOTTING
+        #
+        #     # save for RMANOVA format
+        #     DFANOVA =  DFOUT.unstack(['frequency', 'correct', 'block'])
+        #     print(DFANOVA.columns)
+        #     DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
+        #     DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_block-correct-frequency_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
+        # '''
+        # ######## CORRECT ########
+        # '''
+        # for pupil_dv in ['RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']:
+        #
+        #     # MEANS subject x bin x tone x congruent
+        #     DFOUT = DF.groupby(['subject', 'correct'])[pupil_dv].mean()
+        #     DFOUT.to_csv(os.path.join(self.averages_folder, '{}_correct_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # FOR PLOTTING
+        #
+        #     # save for RMANOVA format
+        #     DFANOVA =  DFOUT.unstack(['correct'])
+        #     print(DFANOVA.columns)
+        #     DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
+        #     DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_correct_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
+        # '''
+        # ######## FREQUENCY ########
+        # '''
+        # for pupil_dv in ['correct', 'RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']: # mean accuracy
+        #     DFOUT = DF.groupby(['subject', 'frequency'])[pupil_dv].mean()
+        #     DFOUT.to_csv(os.path.join(self.averages_folder, '{}_frequency_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # For descriptives
+        #     # save for RMANOVA format
+        #     DFANOVA =  DFOUT.unstack(['frequency'])
+        #     print(DFANOVA.columns)
+        #     DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
+        #     DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_frequency_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
+        #
+        # '''
+        # ######## TOUCH1 ########
+        # '''
+        # for pupil_dv in ['correct', 'RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']: # mean accuracy
+        #     DFOUT = DF.groupby(['subject', 'touch1'])[pupil_dv].mean()
+        #     DFOUT.to_csv(os.path.join(self.averages_folder, '{}_touch1_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # For descriptives
+        #     # save for RMANOVA format
+        #     DFANOVA =  DFOUT.unstack(['touch1'])
+        #     print(DFANOVA.columns)
+        #     DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
+        #     DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_touch1_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
+        # '''
+        # ######## TOUCH2 ########
+        # '''
+        # for pupil_dv in ['correct', 'RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']: # mean accuracy
+        #     DFOUT = DF.groupby(['subject', 'touch2'])[pupil_dv].mean()
+        #     DFOUT.to_csv(os.path.join(self.averages_folder, '{}_touch2_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # For descriptives
+        #     # save for RMANOVA format
+        #     DFANOVA =  DFOUT.unstack(['touch2'])
+        #     print(DFANOVA.columns)
+        #     DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
+        #     DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_touch2_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
+        # '''
+        # ######## FINGER DISTANCE ########
+        # '''
+        # for pupil_dv in ['correct', 'RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']: # mean accuracy
+        #     DFOUT = DF.groupby(['subject', 'finger_distance'])[pupil_dv].mean()
+        #     DFOUT.to_csv(os.path.join(self.averages_folder, '{}_finger_distance_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # For descriptives
+        #     # save for RMANOVA format
+        #     DFANOVA =  DFOUT.unstack(['finger_distance'])
+        #     print(DFANOVA.columns)
+        #     DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
+        #     DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_finger_distance_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
+        # '''
+        # ######## CORRECT X FINGER DISTANCE ########
+        # '''
+        # for pupil_dv in ['RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']:
+        #
+        #     # MEANS subject x bin x tone x congruent
+        #     DFOUT = DF.groupby(['subject', 'correct', 'finger_distance'])[pupil_dv].mean()
+        #     DFOUT.to_csv(os.path.join(self.averages_folder, '{}_correct-finger_distance_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # FOR PLOTTING
+        #
+        #     # save for RMANOVA format
+        #     DFANOVA =  DFOUT.unstack(['finger_distance', 'correct',])
+        #     print(DFANOVA.columns)
+        #     DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
+        #     DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_correct-finger_distance_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
+        # '''
+        # ######## FREQUENCY X FINGER DISTANCE ########
+        # '''
+        # for pupil_dv in ['correct', 'RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']:
+        #
+        #     # MEANS subject x bin x tone x congruent
+        #     DFOUT = DF.groupby(['subject', 'frequency', 'finger_distance'])[pupil_dv].mean()
+        #     DFOUT.to_csv(os.path.join(self.averages_folder, '{}_frequency-finger_distance_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # FOR PLOTTING
+        #
+        #     # save for RMANOVA format
+        #     DFANOVA =  DFOUT.unstack(['finger_distance', 'frequency',])
+        #     print(DFANOVA.columns)
+        #     DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
+        #     DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_frequency-finger_distance_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
+        # '''
+        # ######## CORRECT X FREQUENCY X FINGER DISTANCE ########
+        # '''
+        # for pupil_dv in ['RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']:
+        #
+        #     # MEANS subject x bin x tone x congruent
+        #     DFOUT = DF.groupby(['subject', 'correct', 'frequency', 'finger_distance'])[pupil_dv].mean()
+        #     DFOUT.to_csv(os.path.join(self.averages_folder, '{}_correct-frequency-finger_distance_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # FOR PLOTTING
+        #
+        #     # save for RMANOVA format
+        #     DFANOVA =  DFOUT.unstack(['finger_distance', 'frequency', 'correct'])
+        #     print(DFANOVA.columns)
+        #     DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
+        #     DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_correct-frequency-finger_distance_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
+            
         '''
-        ######## BLOCK x CORRECT x FREQUENCY ########
+        ######## CORRECT X FREQUENCY X TOUCH1 X FLIP ########
         '''
-        for pupil_dv in ['RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']: 
+        for pupil_dv in ['pupil_feed_locked_t1']: 
         
             # MEANS subject x bin x tone x congruent
-            DFOUT = DF.groupby(['subject', 'block', 'correct', 'frequency'])[pupil_dv].mean()
-            DFOUT.to_csv(os.path.join(self.averages_folder, '{}_block-correct-frequency_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # FOR PLOTTING
+            DFOUT = DF.groupby(['subject', 'correct', 'frequency', 'touch1', 'flip'])[pupil_dv].mean()
+            DFOUT.to_csv(os.path.join(self.averages_folder, '{}_correct-frequency-touch1-flip_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # FOR PLOTTING
 
             # save for RMANOVA format
-            DFANOVA =  DFOUT.unstack(['frequency', 'correct', 'block']) 
+            DFANOVA =  DFOUT.unstack(['flip', 'touch1', 'frequency', 'correct']) 
             print(DFANOVA.columns)
             DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
-            DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_block-correct-frequency_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
-        '''
-        ######## CORRECT ########
-        '''
-        for pupil_dv in ['RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']: 
-        
-            # MEANS subject x bin x tone x congruent
-            DFOUT = DF.groupby(['subject', 'correct'])[pupil_dv].mean()
-            DFOUT.to_csv(os.path.join(self.averages_folder, '{}_correct_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # FOR PLOTTING
-
-            # save for RMANOVA format
-            DFANOVA =  DFOUT.unstack(['correct']) 
-            print(DFANOVA.columns)
-            DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
-            DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_correct_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
-        '''
-        ######## FREQUENCY ########
-        '''
-        for pupil_dv in ['correct', 'RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']: # mean accuracy
-            DFOUT = DF.groupby(['subject', 'frequency'])[pupil_dv].mean()
-            DFOUT.to_csv(os.path.join(self.averages_folder, '{}_frequency_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # For descriptives
-            # save for RMANOVA format
-            DFANOVA =  DFOUT.unstack(['frequency']) 
-            print(DFANOVA.columns)
-            DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
-            DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_frequency_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
-        
-        '''
-        ######## TOUCH1 ########
-        '''
-        for pupil_dv in ['correct', 'RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']: # mean accuracy
-            DFOUT = DF.groupby(['subject', 'touch1'])[pupil_dv].mean()
-            DFOUT.to_csv(os.path.join(self.averages_folder, '{}_touch1_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # For descriptives
-            # save for RMANOVA format
-            DFANOVA =  DFOUT.unstack(['touch1']) 
-            print(DFANOVA.columns)
-            DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
-            DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_touch1_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
-        '''
-        ######## TOUCH2 ########
-        '''
-        for pupil_dv in ['correct', 'RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']: # mean accuracy
-            DFOUT = DF.groupby(['subject', 'touch2'])[pupil_dv].mean()
-            DFOUT.to_csv(os.path.join(self.averages_folder, '{}_touch2_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # For descriptives
-            # save for RMANOVA format
-            DFANOVA =  DFOUT.unstack(['touch2']) 
-            print(DFANOVA.columns)
-            DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
-            DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_touch2_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
-        '''
-        ######## FINGER DISTANCE ########
-        '''
-        for pupil_dv in ['correct', 'RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']: # mean accuracy
-            DFOUT = DF.groupby(['subject', 'finger_distance'])[pupil_dv].mean()
-            DFOUT.to_csv(os.path.join(self.averages_folder, '{}_finger_distance_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # For descriptives
-            # save for RMANOVA format
-            DFANOVA =  DFOUT.unstack(['finger_distance']) 
-            print(DFANOVA.columns)
-            DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
-            DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_finger_distance_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
-        '''
-        ######## CORRECT X FINGER DISTANCE ########
-        '''
-        for pupil_dv in ['RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']: 
-        
-            # MEANS subject x bin x tone x congruent
-            DFOUT = DF.groupby(['subject', 'correct', 'finger_distance'])[pupil_dv].mean()
-            DFOUT.to_csv(os.path.join(self.averages_folder, '{}_correct-finger_distance_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # FOR PLOTTING
-
-            # save for RMANOVA format
-            DFANOVA =  DFOUT.unstack(['finger_distance', 'correct',]) 
-            print(DFANOVA.columns)
-            DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
-            DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_correct-finger_distance_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
-        '''
-        ######## FREQUENCY X FINGER DISTANCE ########
-        '''
-        for pupil_dv in ['correct', 'RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']: 
-        
-            # MEANS subject x bin x tone x congruent
-            DFOUT = DF.groupby(['subject', 'frequency', 'finger_distance'])[pupil_dv].mean()
-            DFOUT.to_csv(os.path.join(self.averages_folder, '{}_frequency-finger_distance_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # FOR PLOTTING
-
-            # save for RMANOVA format
-            DFANOVA =  DFOUT.unstack(['finger_distance', 'frequency',]) 
-            print(DFANOVA.columns)
-            DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
-            DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_frequency-finger_distance_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
-        '''
-        ######## CORRECT X FREQUENCY X FINGER DISTANCE ########
-        '''
-        for pupil_dv in ['RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']: 
-        
-            # MEANS subject x bin x tone x congruent
-            DFOUT = DF.groupby(['subject', 'correct', 'frequency', 'finger_distance'])[pupil_dv].mean()
-            DFOUT.to_csv(os.path.join(self.averages_folder, '{}_correct-frequency-finger_distance_{}.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # FOR PLOTTING
-
-            # save for RMANOVA format
-            DFANOVA =  DFOUT.unstack(['finger_distance', 'frequency', 'correct']) 
-            print(DFANOVA.columns)
-            DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
-            DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_correct-frequency-finger_distance_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
+            DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_correct-frequency-touch1-flip_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
         
         print('success: average_conditions')
 

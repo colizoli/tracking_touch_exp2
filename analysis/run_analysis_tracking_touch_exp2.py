@@ -42,7 +42,7 @@ higher_level    = False # all subjects' dataframe, pupil and behavior higher lev
 home_dir        = os.path.dirname(os.getcwd()) # one level up from analysis folder
 source_dir      = os.path.join(home_dir, 'sourcedata')
 data_dir        = os.path.join(home_dir, 'derivatives')
-experiment_name = 'task-touch_prediction2' # 3AFC Decision Task
+experiment_name = 'task-touch_prediction' # 3AFC Decision Task
 edf             = '{}_recording-eyetracking_physio'.format(experiment_name)
 
 # -----------------------
@@ -153,10 +153,12 @@ if higher_level:
         experiment_name         = experiment_name,
         project_directory       = data_dir, 
         sample_rate             = sample_rate,
-        time_locked             = ['stim_locked', 'feed_locked'],
-        pupil_step_lim          = [pupil_step_lim[1], pupil_step_lim[3]],                
+        # time_locked             = ['stim_locked', 'feed_locked'],
+        # pupil_step_lim          = [pupil_step_lim[1], pupil_step_lim[3]],
+        time_locked             = ['feed_locked'],
+        pupil_step_lim          = [pupil_step_lim[3]],            
         baseline_window         = baseline_window,              
-        pupil_time_of_interest  = [[3.0,3.5]], # time windows to average phasic pupil, per event, in higher.plot_evoked_pupil
+        pupil_time_of_interest  = [[0.75,1.5]], # time windows to average phasic pupil, per event, in higher.plot_evoked_pupil
         )
     # higherLevel.higherlevel_get_phasics()       # add baselines, computes phasic pupil for each subject (adds to log files
     # higherLevel.create_subjects_dataframe()     # concantenates all subjects, flags missed trials, saves higher level data frame
@@ -165,6 +167,11 @@ if higher_level:
     # higherLevel.code_stimuli()                  # adds columns for unique touch-pairs, and frequency and finger-distance conditions
     # higherLevel.calculate_actual_frequencies()  # calcuate the actual frequencies of the touch pairs
     # higherLevel.average_conditions()            # group level data frames for all main effects + interaction
+    
+    
+    # TRY TO GET HERE!!!
+    
+    
     # higherLevel.plot_behavior_blocks()          # boxplots for accuracy and RT per block
     # higherLevel.plot_1way_effects()             # simple bar plots for 1-way effects
     # higherLevel.plot_2way_effects()             # plots the interaction effects
@@ -184,9 +191,9 @@ if higher_level:
     # higherLevel.information_theory_estimates()
     # higherLevel.information_correlation_matrix()
     # higherLevel.dataframe_evoked_correlation()
-    higherLevel.plot_pupil_information_regression_evoked()
-    higherLevel.average_information_conditions()
-    higherLevel.plot_information()
+    # higherLevel.plot_pupil_information_regression_evoked()
+    # higherLevel.average_information_conditions()
+    # higherLevel.plot_information()
     
     # not using
     # higherLevel.partial_correlation_information()
