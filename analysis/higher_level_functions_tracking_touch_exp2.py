@@ -449,6 +449,10 @@ class higherLevel(object):
         Notes
         -----
         3 fingers ^ 2 touches -> 9 different letter-color pair combinations.
+        High frequency mappings were: 
+        ring-index (1-3) 
+        middle-middle (2-2)
+        index-ring (3-1)
         
         New column name is "touch_pair"
         """
@@ -458,23 +462,23 @@ class higherLevel(object):
         # make new column to give each touch1-touch2 combination a unique identifier (0 - 8)        
         mapping = [
             (df_in['touch1'] == 1) & (df_in['touch2'] == 1), # 0 LOW NONE
-            (df_in['touch1'] == 1) & (df_in['touch2'] == 2), # 1 HIGH SHORT
-            (df_in['touch1'] == 1) & (df_in['touch2'] == 3), # 2 LOW LONG
+            (df_in['touch1'] == 1) & (df_in['touch2'] == 2), # 1 LOW SHORT
+            (df_in['touch1'] == 1) & (df_in['touch2'] == 3), # 2 HIGH LONG
             
-            (df_in['touch1'] == 2) & (df_in['touch2'] == 1), # 3 HIGH SHORT
-            (df_in['touch1'] == 2) & (df_in['touch2'] == 2), # 4 LOW NONE
+            (df_in['touch1'] == 2) & (df_in['touch2'] == 1), # 3 LOW SHORT
+            (df_in['touch1'] == 2) & (df_in['touch2'] == 2), # 4 HIGH NONE
             (df_in['touch1'] == 2) & (df_in['touch2'] == 3), # 5 LOW SHORT
             
-            (df_in['touch1'] == 3) & (df_in['touch2'] == 1), # 6 LOW LONG
+            (df_in['touch1'] == 3) & (df_in['touch2'] == 1), # 6 HIGH LONG
             (df_in['touch1'] == 3) & (df_in['touch2'] == 2), # 7 LOW SHORT
-            (df_in['touch1'] == 3) & (df_in['touch2'] == 3), # 8 HIGH NONE
+            (df_in['touch1'] == 3) & (df_in['touch2'] == 3), # 8 LOW NONE
             ]
         
         elements = np.arange(9) # also elements is the same as priors (start with 0 so they can be indexed by element)
         df_in['touch_pair'] = np.select(mapping, elements)
         
         # add frequency conditions
-        elements = ['low', 'high', 'low', 'high', 'low', 'low', 'low', 'low', 'high']
+        elements = ['low', 'low', 'high', 'low', 'high', 'low' ,'high', 'low', 'low']
         df_in['frequency'] = np.select(mapping, elements)
         
         # add finger distance
@@ -549,7 +553,7 @@ class higherLevel(object):
         '''
         ######## CORRECT x FREQUENCY ########
         '''
-        for pupil_dv in ['RT', 'pupil_feed_locked_t1', 'pupil_stim_locked_t1', 'pupil_baseline_feed_locked', 'pupil_baseline_stim_locked']: 
+        for pupil_dv in ['RT', 'pupil_feed_locked_t1']: 
         
             # MEANS subject x bin x tone x congruent
             DFOUT = DF.groupby(['subject', 'correct', 'frequency'])[pupil_dv].mean()
@@ -560,6 +564,7 @@ class higherLevel(object):
             print(DFANOVA.columns)
             DFANOVA.columns = DFANOVA.columns.to_flat_index() # flatten column index
             DFANOVA.to_csv(os.path.join(self.jasp_folder, '{}_correct-frequency_{}_rmanova.csv'.format(self.exp, pupil_dv)), float_format='%.16f') # for stats
+            
         # '''
         # ######## BLOCK x CORRECT x FREQUENCY ########
         # '''
