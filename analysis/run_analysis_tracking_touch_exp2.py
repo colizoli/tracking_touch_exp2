@@ -31,9 +31,9 @@ from IPython import embed as shell # for debugging
 # -----------------------
 # Levels (toggle True/False)
 # ----------------------- 
-pre_process     = True  # pupil preprocessing is done on entire time series during the decision task
+pre_process     = False  # pupil preprocessing is done on entire time series during the decision task
 trial_process   = False # cut out events for each trial and calculate trial-wise baselines, baseline correct evoked responses (2AFC decision)
-higher_level    = False # all subjects' dataframe, pupil and behavior higher level analyses & figures (3AFC decision)
+higher_level    = True # all subjects' dataframe, pupil and behavior higher level analyses & figures (3AFC decision)
  
 # -----------------------
 # Paths
@@ -42,7 +42,7 @@ higher_level    = False # all subjects' dataframe, pupil and behavior higher lev
 home_dir        = os.path.dirname(os.getcwd()) # one level up from analysis folder
 source_dir      = os.path.join(home_dir, 'sourcedata')
 data_dir        = os.path.join(home_dir, 'derivatives')
-experiment_name = 'task-touch_prediction' # 3AFC Decision Task
+experiment_name = 'task-touch_prediction2' # 3AFC Decision Task
 edf             = '{}_recording-eyetracking_physio'.format(experiment_name)
 
 # -----------------------
@@ -168,39 +168,21 @@ if higher_level:
     # higherLevel.calculate_actual_frequencies()  # calcuate the actual frequencies of the touch pairs
     # higherLevel.average_conditions()            # group level data frames for all main effects + interaction
     
-    
-    # TRY TO GET HERE!!!
-    
-    
-    # higherLevel.plot_behavior_blocks()          # boxplots for accuracy and RT per block
-    # higherLevel.plot_1way_effects()             # simple bar plots for 1-way effects
-    # higherLevel.plot_2way_effects()             # plots the interaction effects
-    
-    ''' Evoked pupil response
+    ''' Evoked pupil response: this will give you the plot of the average pupil time course all trials (0-3.5 seconds)
     '''
-    # higherLevel.dataframe_evoked_pupil_higher()  # per event of interest, outputs one dataframe for all trials for all subject on pupil time series
-    # higherLevel.plot_evoked_pupil()              # plots evoked pupil per event of interest, group level, main effects + interaction
-    
-    ''' Phasic time-window averaged pupil response
-    '''
-    # higherLevel.individual_differences()       # individual differences correlation between behavior and pupil
-    
+    higherLevel.dataframe_evoked_pupil_higher()  # per event of interest, outputs one dataframe for all trials for all subject on pupil time series
+    higherLevel.plot_evoked_pupil()              # plots evoked pupil per event of interest, group level, main effects + interaction
     
     ''' Ideal learner model
     '''
-    # higherLevel.information_theory_estimates()
-    # higherLevel.information_correlation_matrix()
-    # higherLevel.dataframe_evoked_correlation()
-    # higherLevel.plot_pupil_information_regression_evoked()
-    # higherLevel.average_information_conditions()
-    # higherLevel.plot_information()
-    
-    # not using
-    # higherLevel.partial_correlation_information()
-    # higherLevel.plot_information_pe()         # plots the interaction between the frequency and accuracy
-    # higherLevel.information_evoked_get_phasics()
-    # higherLevel.plot_information_phasics()
-    # higherLevel.plot_information_phasics_accuracy_split()
+    higherLevel.information_theory_estimates()
+    higherLevel.information_correlation_matrix()
+    higherLevel.average_information_conditions()
+    higherLevel.plot_information()
+    higherLevel.idlmodel_finger_flip_regression() # regress suprise and KL divergence (and baseline pupil) on feedback-locked pupil response    
+
+    # TRY TO GET HERE!!!
+
     
     
     
