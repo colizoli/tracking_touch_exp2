@@ -1709,10 +1709,10 @@ class higherLevel(object):
         ############################
         
         dv = 'pupil_feed_locked_t1'
-        ivs = ['model_i', 'model_D', 'pupil_baseline_feed_locked']
+        ivs = ['model_i', 'model_H', 'model_D', 'pupil_baseline_feed_locked']
 
         pd.set_option('display.float_format', lambda x: '%.16f' % x) # suppress scientific notation in pandas
-        cols = ['subject', 'finger', 'flip', 'beta_surprise', 'beta_KL', 'beta_baseline_feed']
+        cols = ['subject', 'finger', 'flip', 'beta_surprise', 'beta_entropy', 'beta_KL', 'beta_baseline_feed']
         df_out = pd.DataFrame(columns=cols)
         
         counter = 0
@@ -1738,8 +1738,9 @@ class higherLevel(object):
                             int(finger),       # touch1
                             int(flip),         # flipped (0 no, 1 yes)
                             results.params[1], # beta surprise
-                            results.params[2], # beta KL
-                            results.params[3], # beta baseline_feedback
+                            results.params[2], # beta entropy
+                            results.params[3], # beta KL
+                            results.params[4], # beta baseline_feedback
                         ]
                     counter += 1
                     
@@ -1753,7 +1754,7 @@ class higherLevel(object):
         df_out['finger_flip'] = 'finger' + df_out['finger'].astype(int).astype(str) + '_flip' + df_out['flip'].astype(int).astype(str)
         
         # Pivot the DataFrame so each 'finger_flip' becomes a set of columns
-        pivot_df = df_out.pivot(index='subject', columns='finger_flip', values=['beta_surprise', 'beta_KL'])
+        pivot_df = df_out.pivot(index='subject', columns='finger_flip', values=['beta_surprise', 'beta_entropy', 'beta_KL'])
         
         # Flatten the multi-level columns
         pivot_df.columns = ['{}_{}'.format(metric, condition) for metric, condition in pivot_df.columns]
