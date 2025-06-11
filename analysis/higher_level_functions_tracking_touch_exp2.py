@@ -1695,6 +1695,7 @@ class higherLevel(object):
         Notes
         -----
         Drop omission trials
+        Standardize independent variables.
         Ordinary least squares:
         pupil ~ surprise + KL divergence + baseline_feed
         * entropy and KL divergence are so highly correlated, left entropy out of regression
@@ -1723,7 +1724,8 @@ class higherLevel(object):
                     this_df.reset_index(inplace=True)
                     
                     Y = np.array(this_df[dv])
-                    X = np.array(this_df[ivs])
+                    x = np.array(this_df[ivs])
+                    X = stats.zscore(x, axis=0)
                     X = sm.add_constant(X)
 
                     # ordinary least squares linear regression, get residuals
@@ -1742,16 +1744,16 @@ class higherLevel(object):
                     counter += 1
                     
         # df_out.to_csv(os.path.join(self.dataframe_folder,'{}_{}_finger_flip_regression.csv'.format(self.exp, dv)), float_format='%.16f')
-        df_out.to_csv(os.path.join(self.dataframe_folder,'{}_{}_finger_flip_regression.csv'.format(self.exp, dv)))
+        df_out.to_csv(os.path.join(self.dataframe_folder,'{}_{}_finger_flip_regression.csv'.format(self.exp, dv)), float_format='%.2f')
         
         # drop baseline betas
-        df_out = df_out.loc[:, ~df_out.columns.str.contains('^base')] # drop all unnamed columns
+        df_out = df_out.loc[:, ~df_out.columns.str.contains('baseline')] # drop all unnamed columns
         
         # Create a unique identifier for each 'finger' and 'flip' combination
         df_out['finger_flip'] = 'finger' + df_out['finger'].astype(int).astype(str) + '_flip' + df_out['flip'].astype(int).astype(str)
         
         # Pivot the DataFrame so each 'finger_flip' becomes a set of columns
-        pivot_df = df_out.pivot(index='subject', columns='finger_flip', values=['beta_surprise', 'beta_KL', 'beta_baseline_feed'])
+        pivot_df = df_out.pivot(index='subject', columns='finger_flip', values=['beta_surprise', 'beta_KL'])
         
         # Flatten the multi-level columns
         pivot_df.columns = ['{}_{}'.format(metric, condition) for metric, condition in pivot_df.columns]
@@ -1759,7 +1761,7 @@ class higherLevel(object):
         # Reset index to bring 'subject' back as a column
         pivot_df = pivot_df.reset_index()
         
-        pivot_df.to_csv(os.path.join(self.jasp_folder, '{}_{}_finger_flip_regression_rmanova.csv'.format(self.exp, dv)), float_format='%.16f') # for stats
+        pivot_df.to_csv(os.path.join(self.jasp_folder, '{}_{}_finger_flip_regression_rmanova.csv'.format(self.exp, dv)), float_format='%.2f') # for stats
         print('success: idlmodel_finger_flip_regression')
 
 
