@@ -4,14 +4,19 @@ Python 3.9
 
 H. Elmas & O.Colizoli 2025
 """
+import serial
+import time
+from psychopy import core
 
 def define_serial_port():
     # Set up port
-    serial_port = serial.Serial("COM3", 115200, timeout=10)
+    serial_port = serial.Serial("COM3", 115200, timeout=0.10)
+    #serial_port = serial.Serial("/dev/ttyUSB0", 115200, timeout = 0.10 )
+
     time.sleep(5)
     return serial_port
 
-def send_solnenoid_pulses(solenoid_id, serial_port, n_pulses=3, rise_time=0.1):
+def send_solnenoid_pulses(solenoid_id, serial_port, n_pulses=5, rise_time=0.05):
     """
     Activates a solenoid connected to a serial port, a number of pulses.
  

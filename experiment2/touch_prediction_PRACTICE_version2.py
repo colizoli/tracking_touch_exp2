@@ -17,7 +17,7 @@ import random
 import numpy as np
 import pandas as pd
 import os, time  # for paths and data
-from IPython import embed as shell # for Olympia debugging only, comment out if crashes
+ # from IPython import embed as shell # for Olympia debugging only, comment out if crashes
 import solenoid_functions
 
 debug_mode = False #20x6 trials when False, True=6 trials
@@ -29,7 +29,7 @@ if touch_mode:
 """
 PARAMETERS
 """
-# hard_path = os.path.join("d:","users","Tamar", "tracking_touch-main", "experiment")
+# hard_path = os.path.join("d:","users","Isabel", "experiment2")
 # os.chdir(hard_path)
 
 hard_path = os.path.join(os.getcwd())
@@ -49,7 +49,7 @@ buttons = ['left', 'down', 'right'] # top, middle, bottom
 button_names = ['top', 'middle' , 'bottom']
 
 # Set trial conditions and randomize stimulus list
-REPS = 5    # times to repeat trial unit full experiment
+REPS = 4    # times to repeat trial unit full experiment
 if debug_mode:
     reps      = 1 # debug mode reps
 else:
@@ -76,6 +76,24 @@ ww = 1000 # wrap width of instructions text
 """
 Start Practice
 """
+
+# Get subject number
+g = gui.Dlg()
+g.addField('Subject Number:')
+g.show()
+try:
+    subject_ID = g.data[0]
+except:
+    subject_ID = list(g.data.values())[0]
+
+subject_id_num = int(subject_ID) # register as interger
+
+
+# Determine initial hand posture: even = up (0), odd = down (1)
+if subject_id_num % 2 == 0:
+    initial_hand = 'up'
+else:
+    initial_hand = 'down'
 # Set-up window:
 mon = monitors.Monitor('myMac15', width=screen_width, distance=screen_dist)
 mon.setSizePix((scnWidth, scnHeight))
@@ -96,18 +114,29 @@ instr1_txt = "PRACTICE Touch prediction\
 \nYOUR TASK IS TO PREDICT ON WHICH FINGER THE 2ND TOUCH WILL BE.\
 \n\nFor these practice trials, the 2nd touch will ALWAYS be on the same finger as the 1st touch!\
 \n\nAfter the first touch, press the Index/ Middle/ Ring finger (Left/ Down /Right) key to indicate your prediction.\
-\n\nMaintain fixation on the '+' in the center of the screen for the duration of the experiment.\
-\nBlink as you normally would, but do NOT move your left hand during the experiment.\
 \n\n<Press any button to CONTINUE INSTRUCTIONS>"
 
 instr2_txt = "Below is a visual example of each trial of the experiment.\
-\nGive your prediction for the finger of the 2nd touch when you see the DIAMOND symbol appear.\
-\n\nAfter the first touch, press the Index/ Middle/ Ring finger (Left/ Down /Right) key as fast as possible to indicate your prediction.\
+\n\nAfter the first touch, press the Index/ Middle/ Ring finger (Left/ Down /Right) key to indicate your prediction.\
+\nGive your prediction for the 2nd touch when you see the DIAMOND symbol appear.\
+\n\n<Press any button to CONTINUE INSTRUCTIONS>"
+
+instr3_txt = "Begin the experiment with your hand facing UPWARDS.\
+\n\nMaintain fixation on the '+' in the center of the screen for the duration of the experiment.\
+\nBlink as you normally would, but avoid moving your head during the experiment.\
+\n\nFor these practice trials, the 2nd touch will ALWAYS be on the same finger as the 1st touch!\
+\n\n<Press any button to BEGIN the PRACTICE TRIALS>"
+
+instr3_down_txt = "Begin the experiment with your hand facing DOWNWARDS.\
+\n\nMaintain fixation on the '+' in the center of the screen for the duration of the experiment.\
+\nBlink as you normally would, but avoid moving your head during the experiment.\
 \n\n<Press any button to BEGIN the PRACTICE TRIALS>"
 
 stim_instr1   = visual.TextStim(win, text=instr1_txt, color='black', pos=(0.0, 0.0), wrapWidth=ww)
 stim_instr2a  = visual.TextStim(win, text=instr2_txt, color='black', pos=(0.0, 100.0), wrapWidth=ww)
 stim_instr2b  = visual.ImageStim(win, image=os.path.join('stimuli', 'trial.png'), pos=(0.0, -200.0))
+stim_instr3a   = visual.TextStim(win, text=instr3_txt, color='black', pos=(0.0, 0.0), wrapWidth=ww)
+stim_instr3b   = visual.TextStim(win, text=instr3_down_txt, color='black', pos=(0.0, 0.0), wrapWidth=ww)
 
 stim_size = (40,40)
 stim_fix     = visual.ImageStim(win, image=os.path.join('stimuli', 'plus.png'), size=stim_size)
@@ -122,7 +151,8 @@ np.random.shuffle(trials) # shuffle order of colors
 print(trials)
 
 # start clock
-clock = core.Clock()
+clock_rt = core.Clock()
+clock_all = core.Clock()
 
 # Welcome instructions
 # stim_instr1.setText(welcome_txt)
@@ -136,6 +166,20 @@ stim_instr2b.draw()
 win.flip()
 core.wait(0.25)
 event.waitKeys()
+
+# Instructions depending on initial hand position
+if initial_hand == 'up':
+    stim_instr3a.setText(instr3_txt)
+    stim_instr3a.draw()
+    win.flip()
+    core.wait(0.25)
+    event.waitKeys()
+else:
+    stim_instr3b.setText(instr3_down_txt)
+    stim_instr3b.draw()
+    win.flip()
+    core.wait(0.25)
+    event.waitKeys()
 
 # Wait a few seconds before first trial to stabilize gaze
 stim_fix.draw()
