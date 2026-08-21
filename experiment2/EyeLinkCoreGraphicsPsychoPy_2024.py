@@ -33,6 +33,7 @@ import os
 import platform
 import array
 import string
+import sys
 import pylink
 import numpy
 import psychopy
@@ -668,19 +669,50 @@ class EyeLinkCoreGraphicsPsychoPy(pylink.EyeLinkCustomDisplay):
                 pass
 
         if line == totlines:
-            bufferv = self._imagebuffer.tostring()
+            # FIX: Use tobytes() instead of tostring() for Python 3.9+
+            try:
+                bufferv = self._imagebuffer.tobytes() 
+            except AttributeError:
+                
+                bufferv = self._imagebuffer.tostring()
+            
             img = Image.frombytes("RGBX", (width, totlines), bufferv)
             self._img = ImageDraw.Draw(img)
             self.draw_cross_hair()
             self.imgResize = img.resize((width*2, totlines*2))
             imgResizeVisual = visual.ImageStim(self._display,
-                                               image=self.imgResize,
-                                               units='pix')
+                                            image=self.imgResize,
+                                            units='pix')
             imgResizeVisual.draw()
             # Change the position of the camera title
             self._title.pos = (0, - totlines*2/2.0 - self._msgHeight)
             self._display.flip()
             self._imagebuffer = array.array('I')
+
+    # def draw_image_line(self, width, line, totlines, buff):
+    #     """ Display image pixel by pixel, line by line""" 
+
+    #     i = 0
+    #     for i in range(width):
+    #         try:
+    #             self._imagebuffer.append(self._pal[buff[i]])
+    #         except:
+    #             pass
+
+    #     if line == totlines:
+    #         bufferv = self._imagebuffer.tobytes()
+    #         img = Image.frombytes("RGBX", (width, totlines), bufferv)
+    #         self._img = ImageDraw.Draw(img)
+    #         self.draw_cross_hair()
+    #         self.imgResize = img.resize((width*2, totlines*2))
+    #         imgResizeVisual = visual.ImageStim(self._display,
+    #                                            image=self.imgResize,
+    #                                            units='pix')
+    #         imgResizeVisual.draw()
+    #         # Change the position of the camera title
+    #         self._title.pos = (0, - totlines*2/2.0 - self._msgHeight)
+    #         self._display.flip()
+    #         self._imagebuffer = array.array('I')
 
     def set_image_palette(self, r, g, b):
         """ Given a set of RGB colors, create a list of 24bit numbers

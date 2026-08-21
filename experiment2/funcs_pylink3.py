@@ -34,12 +34,94 @@ def config(subject_ID,task):
     dataFileName = str(subject_ID)+".EDF"; # can't be longer than 8 letters
     tk.openDataFile(dataFileName) # open an EDF data file on the EyeLink Host PC
 
+# def run_calibration(win, scnWidth, scnHeight):
+#     """
+#     Fixed calibration routine with proper graphics initialization
+#     """
+#     global tk, dataFileName
+    
+#     # WICHTIG: Tracker muss im Offline-Modus sein BEVOR Graphics initialisiert wird
+#     tk.setOfflineMode()
+#     pylink.pumpDelay(50)
+    
+#     # Initialize custom graphics NACH offline mode
+#     genv = EyeLinkCoreGraphicsPsychoPy(tk, win)
+    
+#     # Fix macOS Retina Display (falls relevant)
+#     if 'Darwin' in platform.system():
+#         genv.fixMacRetinaDisplay()
+#         # Update scnWidth/scnHeight für Retina
+#         scnWidth = int(scnWidth / 2.0)
+#         scnHeight = int(scnHeight / 2.0)
+    
+#     # JETZT erst openGraphicsEx aufrufen
+#     pylink.openGraphicsEx(genv)
+    
+#     # Tracker configuration (sampling rate etc.)
+#     tk.sendCommand('sample_rate 1000')
+#     tk.sendCommand("screen_pixel_coords = 0 0 %d %d" % (scnWidth-1, scnHeight-1))
+#     tk.sendMessage("DISPLAY_COORDS = 0 0 %d %d" % (scnWidth-1, scnHeight-1))
+#     tk.sendCommand("calibration_type = HV5")
+    
+#     # Get tracker version info
+#     eyelinkVer = tk.getTrackerVersion()
+    
+#     # Turn off scenelink camera stuff (EyeLink II/I only)
+#     if eyelinkVer == 2:
+#         tk.sendCommand("scene_camera_gazemap = NO")
+    
+#     # Set the tracker to parse Events using "GAZE" data
+#     tk.sendCommand("recording_parse_type = GAZE")
+    
+#     # Online parser configuration
+#     if eyelinkVer >= 2:
+#         tk.sendCommand('select_parser_configuration 0')
+    
+#     # Get Host tracking software version
+#     hostVer = 0
+#     if eyelinkVer == 3:
+#         tvstr = tk.getTrackerVersionString()
+#         vindex = tvstr.find("EYELINK CL")
+#         hostVer = int(float(tvstr[(vindex + len("EYELINK CL")):].strip()))
+    
+#     # Specify EVENT and SAMPLE data
+#     tk.sendCommand("file_event_filter = LEFT,RIGHT,FIXATION,SACCADE,BLINK,MESSAGE,BUTTON,INPUT")
+#     tk.sendCommand("link_event_filter = LEFT,RIGHT,FIXATION,FIXUPDATE,SACCADE,BLINK,BUTTON,INPUT")
+    
+#     if hostVer >= 4:
+#         tk.sendCommand("file_sample_data = LEFT,RIGHT,GAZE,AREA,GAZERES,STATUS,HTARGET,INPUT")
+#         tk.sendCommand("link_sample_data = LEFT,RIGHT,GAZE,GAZERES,AREA,STATUS,HTARGET,INPUT")
+#     else:
+#         tk.sendCommand("file_sample_data = LEFT,RIGHT,GAZE,AREA,GAZERES,STATUS,INPUT")
+#         tk.sendCommand("link_sample_data = LEFT,RIGHT,GAZE,GAZERES,AREA,STATUS,INPUT")
+    
+#     # Show instruction text
+#     txt = visual.TextStim(win, text='(For Researcher) Press ENTER to show calibration options')
+#     txt.draw()
+#     win.flip()
+#     event.waitKeys()
+    
+#     # WICHTIG: Tracker wieder in Offline vor Setup
+#     tk.setOfflineMode()
+#     pylink.pumpDelay(50)
+    
+#     # Launch the calibration
+#     try:
+#         tk.doTrackerSetup()
+#     except RuntimeError as err:
+#         print('ERROR during calibration:', err)
+#         tk.exitCalibration()
+    
+#     # Return to offline mode after calibration
+#     tk.setOfflineMode()
+#     pylink.pumpDelay(50)
 
 def run_calibration(win,scnWidth,scnHeight):
     # Initialize custom graphics for camera setup & drift correction
     # you MUST specify the physical properties of your monitor first, otherwise you won't be able to properly use
     # different screen "units" in psychopy. 
     global tk, dataFileName
+    
     
     # call the custom calibration routine "EyeLinkCoreGraphicsPsychopy.py", instead of the default routines that were implemented in SDL
     genv = EyeLinkCoreGraphicsPsychoPy(tk, win)
@@ -101,7 +183,6 @@ def run_calibration(win,scnWidth,scnHeight):
     # take the tracker offline
     tk.setOfflineMode()
     pylink.pumpDelay(50)
-
 
 def start_recording():
     # start recording EDF file
