@@ -10,7 +10,7 @@ from psychopy import core
 
 def define_serial_port():
     # Set up port
-    serial_port = serial.Serial("COM3", 115200, timeout=0.10)
+    serial_port = serial.Serial("COM4", 115200, timeout=0.10)
     #serial_port = serial.Serial("/dev/ttyUSB0", 115200, timeout = 0.10 )
 
     time.sleep(5)
