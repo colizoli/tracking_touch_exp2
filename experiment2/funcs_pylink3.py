@@ -28,7 +28,8 @@ def config(subject_ID,task):
     # please open eyelink data files early to record as much info as possible
     #cwd = os.getcwd()
     dataFolder = os.path.join('sourcedata', 'sub-{}'.format(subject_ID)) 
-    if not os.path.exists(dataFolder): os.makedirs(dataFolder)
+    if  task != 'eyelink_setup':
+        if not os.path.exists(dataFolder): os.makedirs(dataFolder)
     print(subject_ID)
     print(task)
     dataFileName = str(subject_ID)+".EDF"; # can't be longer than 8 letters
